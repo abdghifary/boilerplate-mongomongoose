@@ -14,10 +14,10 @@ const personSchema = new Schema({
   age: Number,
   favoriteFood: [String],
 });
-const personModel = mongoose.model('Person', personSchema);
+const PersonModel = mongoose.model('Person', personSchema);
 
 const createAndSavePerson = (done) => {
-  const person = new personModel({
+  const person = new PersonModel({
     name: 'John',
     age: 25,
     favoriteFood: ['Pizza', 'Burger'],
@@ -76,13 +76,17 @@ const queryChain = (done) => {
   done(null /*, data*/);
 };
 
+createAndSavePerson(() => {
+  console.log('done', PersonModel);
+});
+
 /** **Well Done !!**
 /* You completed these challenges, let's go celebrate !
  */
 
 //----- **DO NOT EDIT BELOW THIS LINE** ----------------------------------
 
-exports.PersonModel = personModel;
+exports.PersonModel = PersonModel;
 exports.createAndSavePerson = createAndSavePerson;
 exports.findPeopleByName = findPeopleByName;
 exports.findOneByFood = findOneByFood;
@@ -93,3 +97,4 @@ exports.createManyPeople = createManyPeople;
 exports.removeById = removeById;
 exports.removeManyPeople = removeManyPeople;
 exports.queryChain = queryChain;
+
