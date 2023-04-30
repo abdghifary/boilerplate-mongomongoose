@@ -9,18 +9,27 @@ mongoose.connect(process.env.MONGO_URI, {
   useUnifiedTopology: true,
 });
 
-let Person;
+const personSchema = new Schema({
+  name: String,
+  age: Number,
+  favoriteFood: [String],
+});
+const personModel = mongoose.model('Person', personSchema);
 
 const createAndSavePerson = (done) => {
-  const personSchema = new Schema({
-    name: String,
-    age: Number,
-    favoriteFood: [String],
+  const person = new personModel({
+    name: 'John',
+    age: 25,
+    favoriteFood: ['Pizza', 'Burger'],
   });
 
-  Person = mongoose.model('Person', personSchema);
+  person.save((err, data) => {
+    if (err) return console.error(err);
+    console.log(data);
+    done(null, data);
+  });
 
-  done(null, Person);
+  // done(null, Person);
 };
 
 const createManyPeople = (arrayOfPeople, done) => {
@@ -84,4 +93,3 @@ exports.createManyPeople = createManyPeople;
 exports.removeById = removeById;
 exports.removeManyPeople = removeManyPeople;
 exports.queryChain = queryChain;
-
