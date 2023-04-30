@@ -1,23 +1,23 @@
-const dotenv = require('dotenv');
-dotenv.config();
-
+require('dotenv').config();
+const mySecret = process.env['MONGO_URI'];
 const mongoose = require('mongoose');
-const { Schema } = mongoose;
-
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+const { Schema } = require('mongoose');
 
 const personSchema = new Schema({
   name: String,
   age: Number,
-  favoriteFood: [String],
+  favoriteFoods: [String],
 });
-const PersonModel = mongoose.model('Person', personSchema);
+const Person = mongoose.model('Person', personSchema);
+
+mongoose.connect(
+  mySecret,
+  { useNewUrlParser: true, useUnifiedTopology: true },
+  console.log('mongoDB is connected')
+);
 
 const createAndSavePerson = (done) => {
-  const person = new PersonModel({
+  const person = new Person({
     name: 'John',
     age: 25,
     favoriteFood: ['Pizza', 'Burger'],
@@ -76,17 +76,13 @@ const queryChain = (done) => {
   done(null /*, data*/);
 };
 
-createAndSavePerson(() => {
-  console.log('done', PersonModel);
-});
-
 /** **Well Done !!**
 /* You completed these challenges, let's go celebrate !
  */
 
 //----- **DO NOT EDIT BELOW THIS LINE** ----------------------------------
 
-exports.PersonModel = PersonModel;
+exports.PersonModel = Person;
 exports.createAndSavePerson = createAndSavePerson;
 exports.findPeopleByName = findPeopleByName;
 exports.findOneByFood = findOneByFood;
