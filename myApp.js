@@ -18,7 +18,7 @@ const createAndSavePerson = (done) => {
     favoriteFood: [String],
   });
 
-  Person = personSchema;
+  Person = mongoose.model('Person', personSchema);
 
   done(null, Person);
 };
