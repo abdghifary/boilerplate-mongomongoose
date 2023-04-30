@@ -1,7 +1,7 @@
 require('dotenv').config();
 const mySecret = process.env['MONGO_URI'];
 const mongoose = require('mongoose');
-const { Schema } = require('mongoose');
+const { Schema, Model } = require('mongoose');
 
 const personSchema = new Schema({
   name: String,
@@ -28,12 +28,14 @@ const createAndSavePerson = (done) => {
     console.log(data);
     done(null, data);
   });
-
-  // done(null, Person);
 };
 
 const createManyPeople = (arrayOfPeople, done) => {
-  done(null /*, data*/);
+  Model.create(arrayOfPeople, (err, data) => {
+    if (err) return console.error(err);
+    console.log(data);
+    done(null, data);
+  });
 };
 
 const findPeopleByName = (personName, done) => {
@@ -93,4 +95,3 @@ exports.createManyPeople = createManyPeople;
 exports.removeById = removeById;
 exports.removeManyPeople = removeManyPeople;
 exports.queryChain = queryChain;
-
