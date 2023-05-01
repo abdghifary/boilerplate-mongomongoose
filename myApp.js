@@ -63,10 +63,20 @@ const findPersonById = (personId, done) => {
   });
 };
 
+// Perform Classic Updates by Running Find, Edit, then Save
 const findEditThenSave = (personId, done) => {
   const foodToAdd = 'hamburger';
 
-  done(null /*, data*/);
+  Person.findByIdAndUpdate(
+    personId,
+    { $push: { favoriteFoods: foodToAdd } },
+    { runValidators: true },
+    (err, data) => {
+      if (err) return console.error(err);
+      console.log(data);
+      done(null, data);
+    }
+  );
 };
 
 const findAndUpdate = (personName, done) => {
