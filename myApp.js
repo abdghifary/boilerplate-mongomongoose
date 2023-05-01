@@ -8,6 +8,7 @@ const personSchema = new Schema({
   age: Number,
   favoriteFoods: [String],
 });
+
 const Person = mongoose.model('Person', personSchema);
 
 mongoose.connect(
@@ -31,7 +32,7 @@ const createAndSavePerson = (done) => {
 };
 
 const createManyPeople = (arrayOfPeople, done) => {
-  Model.create(arrayOfPeople, (err, data) => {
+  Person.create(arrayOfPeople, (err, data) => {
     if (err) return console.error(err);
     console.log(data);
     done(null, data);
