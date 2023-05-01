@@ -1,7 +1,7 @@
 require('dotenv').config();
 const mySecret = process.env['MONGO_URI'];
 const mongoose = require('mongoose');
-const { Schema, Model } = require('mongoose');
+const { Schem } = require('mongoose');
 
 const personSchema = new Schema({
   name: String,
@@ -67,16 +67,6 @@ const findPersonById = (personId, done) => {
 const findEditThenSave = (personId, done) => {
   const foodToAdd = 'hamburger';
 
-  // Person.findByIdAndUpdate(
-  //   personId,
-  //   { $push: { favoriteFoods: foodToAdd } },
-  //   (err, data) => {
-  //     if (err) return console.error(err);
-  //     console.log(data);
-  //     done(null, data);
-  //   }
-  // );
-
   // .findById() method to find a person by _id with the parameter personId as search key.
   Person.findById(personId, (err, person) => {
     if (err) return console.log(err);
@@ -95,7 +85,18 @@ const findEditThenSave = (personId, done) => {
 const findAndUpdate = (personName, done) => {
   const ageToSet = 20;
 
-  done(null /*, data*/);
+  Person.findOneAndUpdate(
+    personName,
+    { $set: { age: ageToSet } },
+    {
+      new: true,
+    },
+    (err, data) => {
+      if (err) return console.error(err);
+      console.log(data);
+      done(null, data);
+    }
+  );
 };
 
 const removeById = (personId, done) => {
