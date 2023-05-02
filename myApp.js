@@ -1,7 +1,7 @@
 require('dotenv').config();
 const mySecret = process.env['MONGO_URI'];
 const mongoose = require('mongoose');
-const { Schem } = require('mongoose');
+const { Schema } = require('mongoose');
 
 const personSchema = new Schema({
   name: String,
@@ -88,9 +88,7 @@ const findAndUpdate = (personName, done) => {
   Person.findOneAndUpdate(
     { name: personName },
     { age: ageToSet },
-    {
-      new: true,
-    },
+    { new: true },
     (err, data) => {
       if (err) return console.error(err);
       console.log(data);
