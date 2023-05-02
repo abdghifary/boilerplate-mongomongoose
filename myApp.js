@@ -86,7 +86,7 @@ const findAndUpdate = (personName, done) => {
   const ageToSet = 20;
 
   Person.findOneAndUpdate(
-    personName,
+    { name: personName },
     { $set: { age: ageToSet } },
     {
       new: true,
